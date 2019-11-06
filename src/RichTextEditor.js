@@ -1,6 +1,7 @@
 /* @flow */
 import React, {Component} from 'react';
-import {CompositeDecorator, Editor, EditorState, Modifier, RichUtils, Entity} from 'draft-js';
+import {CompositeDecorator, EditorState, Modifier, RichUtils, Entity} from 'draft-js';
+import Editor from 'draft-js-plugins-editor';
 import getDefaultKeyBinding from 'draft-js/lib/getDefaultKeyBinding';
 import changeBlockDepth from './lib/changeBlockDepth';
 import changeBlockType from './lib/changeBlockType';
@@ -63,6 +64,7 @@ type Props = {
   rootStyle?: Object;
   editorStyle?: Object;
   toolbarStyle?: Object;
+  plugins?: Array<any>;
 };
 
 export default class RichTextEditor extends Component {
@@ -104,6 +106,7 @@ export default class RichTextEditor extends Component {
       rootStyle,
       toolbarStyle,
       editorStyle,
+      plugins,
       ...otherProps // eslint-disable-line comma-dangle
     } = this.props;
     let editorState = value.getEditorState();
@@ -154,6 +157,7 @@ export default class RichTextEditor extends Component {
             }}
             spellCheck={true}
             readOnly={readOnly}
+            plugins={Array.isArray(plugins) ? plugins : []}
           />
         </div>
         { toolbarOnBottom && editorToolbar }
